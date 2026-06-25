@@ -157,10 +157,11 @@ function main() {
 
     // Merge on-chain counts into per-address report
     const onChainByAddress = new Map(onChainResults.map(r => [r.address, r.onChainTxCount]));
-    const perAddressFull = perAddress.map(r => ({
-      ...r,
-      onChainTxCount: onChainByAddress.get(r.address) ?? null,
-    }));
+    const perAddressFull = perAddress.map(r => {
+      const onChainTxCount = onChainByAddress.get(r.address) ?? null;
+      const unaccountedTxCount = onChainTxCount !== null ? Math.max(0, onChainTxCount - r.matchCount) : null;
+      return { ...r, onChainTxCount, unaccountedTxCount };
+    });
 
     const report = {
       generatedAt: new Date().toISOString(),
@@ -181,10 +182,10 @@ function main() {
     console.log(`Total txs:    ${totalTxs}`);
     console.log(`Smart money:  ${totalMatches} (mempool)`);
     console.log(`Coverage:     ${coveragePct}`);
-    for (const r of onChainResults) {
-      const mempoolCount = perAddress.find(p => p.address === r.address)?.matchCount ?? 0;
-      const tag = r.onChainTxCount > 0 && mempoolCount === 0 ? ' ← private!' : '';
-      console.log(`  ${r.alias}: ${mempoolCount} mempool / ${r.onChainTxCount} on-chain${tag}`);
+    for (const r of perAddressFull) {
+      const gap = r.unaccountedTxCount;
+      const tag = gap !== null && gap > 0 ? ` ← ${gap} unaccounted (private or stream miss)` : '';
+      console.log(`  ${r.alias}: ${r.matchCount} mempool / ${r.onChainTxCount ?? 'n/a'} on-chain${tag}`);
     }
     console.log(`Report:       ${filename}`);
 
