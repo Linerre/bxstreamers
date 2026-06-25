@@ -55,7 +55,7 @@ function main() {
   const smartMoneySet = new Set(addressToAlias.keys());
 
   // Per-address match tracking
-  type MatchedTx = { txHash: string; timestamp: number };
+  type MatchedTx = { txHash: string; timestamp: string };
   const matchesByAddress = new Map<string, Map<string, MatchedTx>>();
   for (const { address } of SMART_MONEY) matchesByAddress.set(address, new Map());
 
@@ -93,7 +93,7 @@ function main() {
     const from = (result.txContents?.from ?? '').toLowerCase();
 
     if (smartMoneySet.has(from)) {
-      matchesByAddress.get(from)!.set(txHash, { txHash, timestamp: Date.now() });
+      matchesByAddress.get(from)!.set(txHash, { txHash, timestamp: new Date().toISOString() });
       console.log(`[MATCH] ${addressToAlias.get(from)} | ${txHash}`);
     }
   });
