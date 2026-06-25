@@ -43,8 +43,9 @@ function main() {
   const smartMoneySet = new Set(addressToAlias.keys());
 
   // Per-address match tracking
-  const matchesByAddress = new Map<string, Set<string>>();
-  for (const { address } of SMART_MONEY) matchesByAddress.set(address, new Set());
+  type MatchedTx = { txHash: string; timestamp: number };
+  const matchesByAddress = new Map<string, Map<string, MatchedTx>>();
+  for (const { address } of SMART_MONEY) matchesByAddress.set(address, new Map());
 
   let totalTxs = 0;
   const startTime = Date.now();
@@ -80,7 +81,7 @@ function main() {
     const from = (result.txContents?.from ?? '').toLowerCase();
 
     if (smartMoneySet.has(from)) {
-      matchesByAddress.get(from)!.add(txHash);
+      matchesByAddress.get(from)!.set(txHash, { txHash, timestamp: Date.now() });
       console.log(`[MATCH] ${addressToAlias.get(from)} | ${txHash}`);
     }
   });
@@ -106,9 +107,9 @@ function main() {
     let totalMatches = 0;
 
     const perAddress = SMART_MONEY.map(({ address, alias }) => {
-      const hashes = [...matchesByAddress.get(address)!];
-      totalMatches += hashes.length;
-      return { alias, address, matchCount: hashes.length, txHashes: hashes };
+      const txs = [...matchesByAddress.get(address)!.values()];
+      totalMatches += txs.length;
+      return { alias, address, matchCount: txs.length, txs };
     });
 
     const coveragePct =
@@ -183,5 +184,6 @@ function main() {
 function ts() {
   return new Date().toISOString();
 }
+
 
 main();
