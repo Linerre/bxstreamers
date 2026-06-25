@@ -1,5 +1,6 @@
 import { WebSocket } from 'undici';
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
 import { createPublicClient, http, fallback } from 'viem';
 import { bsc } from 'viem/chains';
 
@@ -159,7 +160,9 @@ function main() {
       perAddress: perAddressFull,
     };
 
-    const filename = `coverage-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+    const reportsDir = join(import.meta.dirname, 'reports');
+    mkdirSync(reportsDir, { recursive: true });
+    const filename = join(reportsDir, `coverage-${new Date().toISOString().replace(/[:.]/g, '-')}.json`);
     writeFileSync(filename, JSON.stringify(report, null, 2));
 
     console.log(`\n=== Results ===`);
