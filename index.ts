@@ -5,15 +5,26 @@ import { createPublicClient, http, fallback } from 'viem';
 import { bsc } from 'viem/chains';
 
 const SMART_MONEY = [
-  { address: '0xa83b73f5644cde337b61da79589f10ea15548811', alias: 'AntPositions(蚂蚁仓）☄️' },
+  { address: '0xa83b73f5644cde337b61da79589f10ea15548811', alias: 'AntPositions(蚂蚁仓)' },
   { address: '0xd216cf8ee73da8438a3e57dc63703043cfb6e075', alias: '深情丨先信🔶BNB' },
   { address: '0x93c883963af898ab7c41ef9250f9eed71506eb52', alias: '0x3' },
   { address: '0x8ade93ba431a2ce19fc62a9ce97626e69a4a333f', alias: '0xLuck' },
   { address: '0xbf004bff64725914ee36d03b87d6965b0ced4903', alias: '阿峰_Afeng' },
-  { address: '0xfb4e4fa492217d8401aa9e893c78707b61923953', alias: '小财神🔶BNB（恶俗企鹅版）' },
+  { address: '0xfb4e4fa492217d8401aa9e893c78707b61923953', alias: '小财神🔶BNB(恶俗企鹅版)' },
   { address: '0xeeefff8ce2710fa490e0fcb794235e873c252d2e', alias: '神龙 🔶 BNB' },
   { address: '0x7a2363a401b2340c7941dd2eeff0196a5078d2e6', alias: '金狗挖掘机 | 0xDavid' },
-  { address: '0x55976c6818e4794f3e2e7179eea2cc2202811e11', alias: 'nine lives' },
+  { address: '0x1fa8bbd3f95f89958930450ee155355588888888', alias: 'blockdao' },
+  { address: '0xe881f671b1ede86d4a8e3315ce13b77257ec7525', alias: 'DevClaw|BNB' },
+  { address: '0x94cf7ed19901eb7d487c779e6d1baa87157b2d01', alias: '888UP' },
+  { address: '0x877af245c61289b24f0c619a4346cdbc68f1aaac', alias: '古月月' },
+  { address: '0x8b54982efb0d30df9eac59b3badde4ea951d20ca', alias: '芮芮' },
+  { address: '0xa7bfa56d1fbb7809b8424b452896707be408e1bc', alias: 'CryptoCharming' },
+  { address: '0x5388668c4fa8da7f756ef8498ff24d7999999999', alias: '西瓜🔶BNB' },
+  { address: '0x0f84d2da979180394fbf9c4499febd0f602a6767', alias: 'Sunny' },
+  { address: '0x55976c6818e4794f3e2e7179eea2cc2202811e11', alias: '九条命' },
+  { address: '0xcfe30db196c9a99fc80c72ad44fb4a135a53491f', alias: '旭旭宝宝' },
+  { address: '0x1dd150812ea4bf8180caca44756cbde92a696ca5', alias: '亚细亚旷世奇才' },
+  { address: '0xccca3d50de8eb61af73b147836166702fa5c2061', alias: 'Unknown'},
 ];
 
 const WS_URL = 'wss://tokyo.bsc.blxrbdn.com/ws';
