@@ -15,6 +15,8 @@ const SMART_MONEY = [
   { address: '0x55976c6818e4794f3e2e7179eea2cc2202811e11', alias: 'nine lives' },
 ];
 
+const WS_URL = 'wss://tokyo.bsc.blxrbdn.com/ws';
+
 const BSC_BLOCK_TIME_S = 0.45;
 
 function main() {
@@ -27,7 +29,6 @@ function main() {
   if (!API_KEY) throw new Error('BLXR_AUTH_HEADER is not set in .env');
 
   const DURATION_MS = Number(DURATION_MINUTES ?? 5) * 60_000;
-  const WS_URL = 'wss://tokyo.bsc.blxrbdn.com/ws';
 
   const rpcClient = createPublicClient({
     chain: bsc,
